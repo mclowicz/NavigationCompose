@@ -1,16 +1,14 @@
 package com.example.navigationcompose.presentation.common
 
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
-import com.example.navigationcompose.navigation.Screen
+import com.example.navigationcompose.presentation.common.topBar.TopBarNavItems
 
 @Composable
 fun TopBar(
-    title: String = "",
+    title: String = String(),
     hamburgerIcon: ImageVector,
     onHamburgerButtonClicked: () -> Unit,
     navController: NavController? = null
@@ -22,18 +20,20 @@ fun TopBar(
             )
         },
         actions = {
-            IconButton(onClick = {
-                navController?.navigate(Screen.Cart.route) {
-                    navController.graph.startDestinationId
-                    launchSingleTop = true
+            TopBarNavItems.forEach { navItem ->
+                IconButton(onClick = {
+                    navController?.navigate(navItem.route) {
+                        navController.graph.startDestinationId
+                        launchSingleTop = true
+                    }
+                }) {
+                    Icon(navItem.icon, contentDescription = navItem.label)
                 }
-            } ) {
-                Icon(Icons.Filled.ShoppingCart, contentDescription = "")
             }
         },
         navigationIcon = {
-            IconButton(onClick = { onHamburgerButtonClicked() } ) {
-                Icon(hamburgerIcon, contentDescription = "")
+            IconButton(onClick = { onHamburgerButtonClicked() }) {
+                Icon(hamburgerIcon, contentDescription = String())
             }
         },
         backgroundColor = MaterialTheme.colors.primaryVariant

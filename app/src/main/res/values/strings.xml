@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Navigation Compose</string>
+    <string name="page_content">%s Page content here.</string>
 </resources>

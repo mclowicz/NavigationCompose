@@ -3,6 +3,7 @@ package com.example.navigationcompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -13,6 +14,7 @@ import com.example.navigationcompose.presentation.common.Drawer
 import com.example.navigationcompose.ui.theme.NavigationComposeTheme
 import kotlinx.coroutines.launch
 
+@ExperimentalAnimationApi
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +27,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalAnimationApi
 @Composable
 fun AppMainScreen() {
     val navController = rememberNavController()
@@ -34,7 +37,10 @@ fun AppMainScreen() {
     ) {
         Scaffold(
             bottomBar = {
-                if (drawerState.isClosed) {
+                AnimatedVisibility(
+                    visible = drawerState.isClosed,
+                    enter = expandVertically(),
+                    exit = shrinkVertically()) {
                     BottomNavBar(navController = navController)
                 }
             }

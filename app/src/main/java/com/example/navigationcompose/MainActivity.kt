@@ -28,15 +28,17 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppMainScreen() {
     val navController = rememberNavController()
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
     Surface(
         color = MaterialTheme.colors.background,
     ) {
         Scaffold(
             bottomBar = {
-                BottomNavBar(navController = navController)
+                if (drawerState.isClosed) {
+                    BottomNavBar(navController = navController)
+                }
             }
         ) {
-            val drawerState = rememberDrawerState(DrawerValue.Closed)
             val scope = rememberCoroutineScope()
             val openDrawer = {
                 scope.launch {
